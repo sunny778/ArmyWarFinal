@@ -134,8 +134,6 @@ public class BuyListAdapter extends RecyclerView.Adapter<BuyListAdapter.BuyListH
                         updateItemQuantityDB(armyItem.getItemId(), armyItem.getOwn());
                         own.setText(armyItem.getOwn() + "");
                         buyQuantity = 0;
-
-                        Toast.makeText(context, money + "", Toast.LENGTH_SHORT).show();
                     }
                     break;
 

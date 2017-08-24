@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -98,11 +99,14 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         }
 
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        String stringDate = sp.getString(getString(R.string.save_date), "");
+        String stringDate = sp.getString(getString(R.string.save_date), UserMainPageActivity.STARTING_DATE);
         Date date;
         try {
             date = format.parse(stringDate);
             textDate.setText(format.format(date));
+            sp.edit()
+                    .putString(getString(R.string.save_date), stringDate)
+                    .commit();
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -162,15 +166,30 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.buttonNext:
+
                 String sDate = sp.getString(getString(R.string.save_date), "");
-//                String month = date.substring(3, 5);
-//                Toast.makeText(getContext(), date + "", Toast.LENGTH_SHORT).show();
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                Calendar c = Calendar.getInstance();
+                try {
+                    c.setTime(sdf.parse(sDate));
+                    c.add(Calendar.DATE, 1);
+                    sDate = sdf.format(c.getTime());
+
+                    sp.edit()
+                            .putString(getString(R.string.save_date), sDate)
+                            .commit();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
 
                 int money = sp.getInt(getString(R.string.save_money), 0);
                 money += DAILY_MONEY;
                 sp.edit()
                         .putInt(getString(R.string.save_money), money)
                         .commit();
+
+                getUserInformation();
+
                 break;
 
         }
