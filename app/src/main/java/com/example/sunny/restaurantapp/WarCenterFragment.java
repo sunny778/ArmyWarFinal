@@ -55,19 +55,9 @@ public class WarCenterFragment extends Fragment implements View.OnClickListener 
                 double userArmyQuantity = getQuantity(ArmyProvider.CONTENT_URI);
 
                 if (robotArmyQuantity > userArmyQuantity){
-                    AlertDialog dialog = new AlertDialog.Builder(getContext())
-                            .setTitle("War Result!")
-                            .setMessage("You LOST in this battle!!")
-                            .setNegativeButton("OK", null)
-                            .create();
-                    dialog.show();
+                    showDialogResult("You LOST in this battle!!");
                 }else{
-                    AlertDialog dialog = new AlertDialog.Builder(getContext())
-                            .setTitle("War Result!")
-                            .setMessage("You WON in this battle!!")
-                            .setNegativeButton("OK", null)
-                            .create();
-                    dialog.show();
+                    showDialogResult("You WON in this battle!!");
                 }
                 break;
 
@@ -75,6 +65,15 @@ public class WarCenterFragment extends Fragment implements View.OnClickListener 
 
                 break;
         }
+    }
+
+    protected void showDialogResult(String message){
+        AlertDialog dialog = new AlertDialog.Builder(getContext())
+                .setTitle("War Result!")
+                .setMessage(message)
+                .setNegativeButton("OK", null)
+                .create();
+        dialog.show();
     }
 
     protected double getQuantity(Uri uri){
