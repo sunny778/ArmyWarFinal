@@ -40,7 +40,7 @@ import static android.content.Context.MODE_PRIVATE;
  */
 public class MainFragment extends Fragment implements View.OnClickListener {
 
-    private static final int DELAY_IN_MILLIS = 2500;
+    private static final long DELAY_IN_MILLIS = 2500;
     public static final int USER_DAILY_MONEY = 10;
     public static final int ROBOT_DAILY_MONEY = 7;
     public static final int SOLDIER = 1;
@@ -207,7 +207,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
                 sleepTime();
                 new RobotBuyArmyTask().execute();
-                getUserInformation();
 
                 break;
         }
@@ -215,20 +214,21 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     }
 
     public void sleepTime(){
-        final ProgressDialog dialog = new ProgressDialog(getContext());
+        final ProgressDialog dialog = new ProgressDialog(getActivity());
         dialog.setTitle("Loading...");
         dialog.setMessage("Please wait.");
         dialog.setIndeterminate(true);
         dialog.setCancelable(false);
         dialog.show();
 
+        long delayInMillis = 5000;
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 dialog.dismiss();
             }
-        }, DELAY_IN_MILLIS);
+        }, delayInMillis);
     }
 
     public class RobotBuyArmyTask extends AsyncTask<Void, Void, Void>{
@@ -287,6 +287,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            getUserInformation();
         }
     }
 

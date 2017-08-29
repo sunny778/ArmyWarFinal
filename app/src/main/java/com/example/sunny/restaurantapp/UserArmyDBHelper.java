@@ -19,7 +19,7 @@ public class UserArmyDBHelper extends SQLiteOpenHelper {
     protected static final String COL_PRICE = "price";
 
     // robot army table
-    protected static final String TABLE_NAME2 = "robot_army";
+    protected static final String TABLE_NAME2 = "lebanon_army";
 
 
     public UserArmyDBHelper(Context context) {
