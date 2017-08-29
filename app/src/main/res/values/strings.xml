@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">RestaurantApp</string>
+    <string name="email_edit_text">Please insert your email</string>
+    <string name="password_edit_text">Please insert your password</string>
+    <string name="signin_button">Sign in with Restaurant App account</string>
+    <string name="create_account_button">Create Restaurant App account</string>
+    <string name="text_title">Welcome to Army War</string>
+    <string name="text_land">Land space:</string>
+    <string name="text_military">Military size:</string>
+    <string name="text_money">Money:</string>
+    <string name="text_date">Date:</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="button_clean">Clean</string>
+    <string name="button_buy">Buy</string>
+    <string name="save_land">land</string>
+    <string name="save_money">money</string>
+    <string name="save_date">date</string>
+    <string name="total_price">total</string>
+    <string name="user_info">user_info</string>
+    <string name="button_next_day">Next Day</string>
+    <string name="first_time_run">firstTimeRun</string>
+</resources>
