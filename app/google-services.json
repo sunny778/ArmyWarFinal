@@ -59,6 +59,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "909633561280-u7ve8kr8g0m40494qg0le24ifjdm71r7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sunny.restaurantapp",
+            "certificate_hash": "364794fd0e9e6e62156f6fe44bebec2dace2b732"
+          }
+        },
+        {
           "client_id": "909633561280-c80i8cv0a5gu0219338bh361629512lb.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

@@ -1,6 +1,7 @@
 package com.example.sunny.restaurantapp;
 
 import android.app.Application;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,6 +18,8 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
+
 public class UserMainPageActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "UserMainPageActivity";
@@ -24,8 +27,6 @@ public class UserMainPageActivity extends AppCompatActivity implements View.OnCl
     protected static final int STARTING_MONEY = 20;
     protected static final String STARTING_DATE = "23/07/2017";
 
-    private Context context;
-    private Intent intent;
     private FragmentManager manager;
     private SharedPreferences userInfoSP;
 
@@ -59,21 +60,11 @@ public class UserMainPageActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.buttonLogout:
-                // TODO add the logout from google account
-//                FirebaseAuth.getInstance().signOut();
-//                Intent intent = new Intent(UserMainPageActivity.this, MainActivity.class);
-//                startActivity(intent);
+                FirebaseAuth.getInstance().signOut();
+                finish();
+                Intent intent = new Intent(UserMainPageActivity.this, MainActivity.class);
+                startActivity(intent);
                 break;
         }
     }
-
-//    protected void signOut() {
-//        Auth.GoogleSignInApi.signOut(userInfo.getGoogleApiClient()).setResultCallback(
-//                new ResultCallback<Status>() {
-//                    @Override
-//                    public void onResult(Status status) {
-//                        // ...
-//                    }
-//                });
-//    }
 }

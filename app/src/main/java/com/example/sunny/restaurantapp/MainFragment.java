@@ -7,16 +7,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.MainThread;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +30,6 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static android.R.attr.handle;
 import static android.content.Context.MODE_PRIVATE;
 
 
@@ -40,7 +38,8 @@ import static android.content.Context.MODE_PRIVATE;
  */
 public class MainFragment extends Fragment implements View.OnClickListener {
 
-    private static final long DELAY_IN_MILLIS = 2500;
+    private static final int ARMIES_QUANTITY = 2;
+    private static final long DELAY_IN_MILLIS = 5000;
     public static final int USER_DAILY_MONEY = 10;
     public static final int ROBOT_DAILY_MONEY = 7;
     public static final int SOLDIER = 1;
@@ -195,6 +194,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                     sp.edit()
                             .putString(getString(R.string.save_date), sDate)
                             .apply();
+                    textDate.setText(sDate);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -204,7 +204,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                 sp.edit()
                         .putInt(getString(R.string.save_money), money)
                         .apply();
-
+                textMoney.setText(money + "M");
                 sleepTime();
                 new RobotBuyArmyTask().execute();
 
@@ -221,7 +221,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         dialog.setCancelable(false);
         dialog.show();
 
-        long delayInMillis = 5000;
+        long delayInMillis = DELAY_IN_MILLIS;
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -231,57 +231,68 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         }, delayInMillis);
     }
 
-    public class RobotBuyArmyTask extends AsyncTask<Void, Void, Void>{
+    public class RobotBuyArmyTask extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... voids) {
 
-            int money = ROBOT_DAILY_MONEY;
-            int own;
-            int price;
-            int[] res;
+            Uri uri;
 
-            while (money > 0){
+            for (int i = 0; i < ARMIES_QUANTITY; i++) {
 
-                Random random = new Random();
-                int randBuy = random.nextInt(4) + 1;
-
-                switch (randBuy){
-
-                    case SOLDIER:
-                        res = getOwnQuantityItem(SOLDIER);
-                        own = res[0] + 1;
-                        price = res[1];
-                        money -= price;
-                        updateItemQuantityDB(SOLDIER, own);
-                        break;
-
-                    case TANK:
-                        res = getOwnQuantityItem(TANK);
-                        own = res[0] + 1;
-                        price = res[1];
-                        money -= price;
-                        updateItemQuantityDB(TANK, own);
-                        break;
-
-                    case ARTILLERY:
-                        res = getOwnQuantityItem(ARTILLERY);
-                        own = res[0] + 1;
-                        price = res[1];
-                        money -= price;
-                        updateItemQuantityDB(ARTILLERY, own);
-                        break;
-
-                    case F_16:
-                        res = getOwnQuantityItem(F_16);
-                        own = res[0] + 1;
-                        price = res[1];
-                        money -= price;
-                        updateItemQuantityDB(F_16, own);
-                        break;
+                if (i == 0){
+                    uri = ArmyProvider.CONTENT_LEBANON_URI;
+                }else {
+                    uri = ArmyProvider.CONTENT_IRAN_URI;
                 }
-            }
 
+                int money = ROBOT_DAILY_MONEY;
+                int own;
+                int price;
+                int[] res;
+
+                while (money > 0) {
+
+                    Random random = new Random();
+                    int randBuy = random.nextInt(4) + 1;
+
+                    switch (randBuy) {
+
+                        case SOLDIER:
+                            res = getOwnQuantityItem(SOLDIER);
+                            own = res[0] + 1;
+                            price = res[1];
+                            money -= price;
+                            updateItemQuantityDB(SOLDIER, own, uri);
+                            break;
+
+                        case TANK:
+                            res = getOwnQuantityItem(TANK);
+                            own = res[0] + 1;
+                            price = res[1];
+                            money -= price;
+                            updateItemQuantityDB(TANK, own, uri);
+                            break;
+
+                        case ARTILLERY:
+                            res = getOwnQuantityItem(ARTILLERY);
+                            own = res[0] + 1;
+                            price = res[1];
+                            money -= price;
+                            updateItemQuantityDB(ARTILLERY, own, uri);
+                            break;
+
+                        case F_16:
+                            res = getOwnQuantityItem(F_16);
+                            own = res[0] + 1;
+                            price = res[1];
+                            money -= price;
+                            updateItemQuantityDB(F_16, own, uri);
+                            break;
+                    }
+                }
+
+            }
             return null;
         }
 
@@ -297,7 +308,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
         int[] res = new int[2];
 
-        Cursor cursor = getActivity().getContentResolver().query(ArmyProvider.CONTENT_ROBOT_URI, null, UserArmyDBHelper.COL_ID + "=" + itemId, null, null);
+        Cursor cursor = getActivity().getContentResolver().query(ArmyProvider.CONTENT_LEBANON_URI, null, UserArmyDBHelper.COL_ID + "=" + itemId, null, null);
 
         while (cursor.moveToNext()) {
             res[0] = cursor.getInt(cursor.getColumnIndex(UserArmyDBHelper.COL_QUANTITY));
@@ -307,11 +318,11 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         return res;
     }
 
-    protected void updateItemQuantityDB(int itemId, int quantity){
+    protected void updateItemQuantityDB(int itemId, int quantity, Uri uri){
 
         ContentValues values = new ContentValues();
         values.put(UserArmyDBHelper.COL_QUANTITY, quantity);
-        getContext().getContentResolver().update(ArmyProvider.CONTENT_ROBOT_URI, values, UserArmyDBHelper.COL_ID + "=" + itemId, null);
+        getContext().getContentResolver().update(uri, values, UserArmyDBHelper.COL_ID + "=" + itemId, null);
     }
 
 

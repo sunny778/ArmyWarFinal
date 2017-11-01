@@ -18,8 +18,11 @@ public class UserArmyDBHelper extends SQLiteOpenHelper {
     protected static final String COL_IMAGE = "image";
     protected static final String COL_PRICE = "price";
 
-    // robot army table
+    // Lebanon army table
     protected static final String TABLE_NAME2 = "lebanon_army";
+
+    // Iran army table
+    protected static final String TABLE_NAME3 = "Iran_army";
 
 
     public UserArmyDBHelper(Context context) {
@@ -32,12 +35,17 @@ public class UserArmyDBHelper extends SQLiteOpenHelper {
         String sql = String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, %s TEXT, %s INTEGER, %s TEXT, %s INTEGER)"
                 , TABLE_NAME, COL_ID, COL_NAME, COL_QUANTITY, COL_IMAGE, COL_PRICE);
 
-        // create robot army table
+        // create Lebanon army table
         String sql2 = String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, %s TEXT, %s INTEGER, %s TEXT, %s INTEGER)"
                 , TABLE_NAME2, COL_ID, COL_NAME, COL_QUANTITY, COL_IMAGE, COL_PRICE);
 
+        // create Iran army table
+        String sql3 = String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, %s TEXT, %s INTEGER, %s TEXT, %s INTEGER)"
+                , TABLE_NAME3, COL_ID, COL_NAME, COL_QUANTITY, COL_IMAGE, COL_PRICE);
+
         db.execSQL(sql);
         db.execSQL(sql2);
+        db.execSQL(sql3);
 
     }
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RestaurantApp</string>
+    <string name="app_name">ArmyWar</string>
     <string name="email_edit_text">Please insert your email</string>
     <string name="password_edit_text">Please insert your password</string>
     <string name="signin_button">Sign in with Restaurant App account</string>
@@ -21,4 +21,6 @@
     <string name="user_info">user_info</string>
     <string name="button_next_day">Next Day</string>
     <string name="first_time_run">firstTimeRun</string>
+    <string name="button_new_game">Start New Game</string>
+    <string name="button_exit">Exit</string>
 </resources>

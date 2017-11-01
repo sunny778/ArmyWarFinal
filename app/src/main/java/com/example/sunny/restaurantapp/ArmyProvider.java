@@ -14,7 +14,8 @@ public class ArmyProvider extends ContentProvider {
 
     private static final String AUTHORITY = "com.example.sunny.restaurantapp.authority.army";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + UserArmyDBHelper.TABLE_NAME);
-    public static final Uri CONTENT_ROBOT_URI = Uri.parse("content://" + AUTHORITY + "/" + UserArmyDBHelper.TABLE_NAME2);
+    public static final Uri CONTENT_LEBANON_URI = Uri.parse("content://" + AUTHORITY + "/" + UserArmyDBHelper.TABLE_NAME2);
+    public static final Uri CONTENT_IRAN_URI = Uri.parse("content://" + AUTHORITY + "/" + UserArmyDBHelper.TABLE_NAME3);
 
     private UserArmyDBHelper helper;
 
@@ -37,8 +38,10 @@ public class ArmyProvider extends ContentProvider {
 
         if (uri.equals(CONTENT_URI)) {
             rowId = db.insert(UserArmyDBHelper.TABLE_NAME, null, values);
-        }else {
+        }else if (uri.equals(uri.equals(CONTENT_LEBANON_URI))){
             rowId = db.insert(UserArmyDBHelper.TABLE_NAME2, null, values);
+        } else {
+            rowId = db.insert(UserArmyDBHelper.TABLE_NAME3, null, values);
         }
 
         getContext().getContentResolver().notifyChange(uri, null);
@@ -54,8 +57,10 @@ public class ArmyProvider extends ContentProvider {
 
         if (uri.equals(CONTENT_URI)) {
             cursor = db.query(UserArmyDBHelper.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
-        }else {
+        }else if (uri.equals(uri.equals(CONTENT_LEBANON_URI))){
             cursor = db.query(UserArmyDBHelper.TABLE_NAME2, projection, selection, selectionArgs, null, null, sortOrder);
+        }else {
+            cursor = db.query(UserArmyDBHelper.TABLE_NAME3, projection, selection, selectionArgs, null, null, sortOrder);
         }
 
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
@@ -71,8 +76,10 @@ public class ArmyProvider extends ContentProvider {
 
         if (uri.equals(CONTENT_URI)) {
             count = db.delete(UserArmyDBHelper.TABLE_NAME, selection, selectionArgs);
-        }else {
+        }else if (uri.equals(uri.equals(CONTENT_LEBANON_URI))){
             count = db.delete(UserArmyDBHelper.TABLE_NAME2, selection, selectionArgs);
+        }else {
+            count = db.delete(UserArmyDBHelper.TABLE_NAME3, selection, selectionArgs);
         }
 
         getContext().getContentResolver().notifyChange(uri, null);
@@ -88,8 +95,10 @@ public class ArmyProvider extends ContentProvider {
 
         if (uri.equals(CONTENT_URI)) {
             count = db.update(UserArmyDBHelper.TABLE_NAME, values, selection, selectionArgs);
-        }else {
+        }else if (uri.equals(uri.equals(CONTENT_LEBANON_URI))){
             count = db.update(UserArmyDBHelper.TABLE_NAME2, values, selection, selectionArgs);
+        }else {
+            count = db.update(UserArmyDBHelper.TABLE_NAME3, values, selection, selectionArgs);
         }
 
         getContext().getContentResolver().notifyChange(uri, null);

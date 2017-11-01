@@ -5,20 +5,6 @@
     tools:context="com.example.sunny.restaurantapp.MainFragment">
 
     <LinearLayout
-        android:id="@+id/progressLinear"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
-
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/mainLinear"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/buttonLogout"

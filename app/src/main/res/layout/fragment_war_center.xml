@@ -1,29 +1,25 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/world_background"
+    android:orientation="horizontal"
     tools:context="com.example.sunny.restaurantapp.WarCenterFragment">
 
     <ImageButton
         android:id="@+id/imageButtonLebanon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="175dp"
-        android:layout_marginStart="175dp"
-        app:srcCompat="@drawable/flag_lb"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@null"
+        app:srcCompat="@mipmap/lebanon_map_picture" />
 
     <ImageButton
         android:id="@+id/imageButtonIran"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imageButtonLebanon"
-        android:layout_marginLeft="118dp"
-        android:layout_marginStart="118dp"
-        android:layout_toEndOf="@+id/imageButtonLebanon"
-        android:layout_toRightOf="@+id/imageButtonLebanon"
-        app:srcCompat="@drawable/flag_ir" />
-</RelativeLayout>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@null"
+        app:srcCompat="@mipmap/iran_map_picture" />
+</LinearLayout>

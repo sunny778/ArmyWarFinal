@@ -6,7 +6,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/army_war_icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -24,6 +24,7 @@
             android:name=".UserMainPageActivity"
             android:screenOrientation="landscape"></activity>
         <activity android:name=".CreateArmyActivity"></activity>
+        <activity android:name=".StartGameActivity"></activity>
 
         <provider
             android:authorities="com.example.sunny.restaurantapp.authority.army"
