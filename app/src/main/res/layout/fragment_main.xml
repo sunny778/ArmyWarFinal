@@ -123,7 +123,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Buy Army"
+                android:text="@string/button_buy_army"
                 android:textAllCaps="false" />
 
             <Button
@@ -154,7 +154,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="War Center"
+                android:text="@string/button_war_center"
                 android:textAllCaps="false" />
 
             <Button
@@ -189,11 +189,11 @@
                 android:textAllCaps="false" />
 
             <Button
-                android:id="@+id/button5"
+                android:id="@+id/buttonNewGame"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Button"
+                android:text="@string/button_new_game"
                 android:textAllCaps="false" />
 
             <Button

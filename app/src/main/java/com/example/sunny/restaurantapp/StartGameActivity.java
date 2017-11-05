@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.UiThread;
 import android.view.View;
 
 public class StartGameActivity extends Activity implements View.OnClickListener {
@@ -34,8 +35,10 @@ public class StartGameActivity extends Activity implements View.OnClickListener 
                 break;
 
             case R.id.buttonExit:
-                android.os.Process.killProcess(android.os.Process.myPid());
-                System.exit(0);
+                Intent intent1 = new Intent(Intent.ACTION_MAIN);
+                intent1.addCategory(Intent.CATEGORY_HOME);
+                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent1);
                 break;
         }
     }

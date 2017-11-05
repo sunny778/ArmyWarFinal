@@ -87,6 +87,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         root.findViewById(R.id.buttonRank).setOnClickListener(this);
         root.findViewById(R.id.buttonDiplomacy).setOnClickListener(this);
         root.findViewById(R.id.buttonNext).setOnClickListener(this);
+        root.findViewById(R.id.buttonNewGame).setOnClickListener(this);
 
         return root;
     }
@@ -179,6 +180,16 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
             case R.id.buttonDiplomacy:
 
+                break;
+
+            case R.id.buttonNewGame:
+                sp.edit()
+                        .putBoolean(getString(R.string.first_time_run), true)
+                        .apply();
+                getActivity().finish();
+                Intent intent = new Intent(getContext(), UserMainPageActivity.class);
+                startActivity(intent);
+                Toast.makeText(getContext(), "New Game", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.buttonNext:
@@ -322,7 +333,11 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
         ContentValues values = new ContentValues();
         values.put(UserArmyDBHelper.COL_QUANTITY, quantity);
-        getContext().getContentResolver().update(uri, values, UserArmyDBHelper.COL_ID + "=" + itemId, null);
+        try {
+            getContext().getContentResolver().update(uri, values, UserArmyDBHelper.COL_ID + "=" + itemId, null);
+        }catch (NullPointerException ex){
+            Log.d("DB", ex.getMessage());
+        }
     }
 
 

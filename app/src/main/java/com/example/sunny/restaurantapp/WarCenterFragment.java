@@ -8,16 +8,25 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.HandlerThread;
+import android.os.MessageQueue;
+import android.support.annotation.MainThread;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 
 /**
@@ -41,6 +50,7 @@ public class WarCenterFragment extends Fragment implements View.OnClickListener 
     private ArrayList<ArmyItem> robotArmy;
     private double robotArmyPower;
     private double userArmyPower;
+    private Handler handler;
 
     private SharedPreferences sp;
 
@@ -62,9 +72,12 @@ public class WarCenterFragment extends Fragment implements View.OnClickListener 
 
         imageButtonLebanon = (ImageButton) root.findViewById(R.id.imageButtonLebanon);
         imageButtonIran = (ImageButton) root.findViewById(R.id.imageButtonIran);
+        handler = new ConsoleHandler();
 
         imageButtonLebanon.setOnClickListener(this);
         imageButtonIran.setOnClickListener(this);
+        imageButtonLebanon.setVisibility(View.VISIBLE);
+        imageButtonIran.setVisibility(View.VISIBLE);
 
         return root;
     }
@@ -87,6 +100,7 @@ public class WarCenterFragment extends Fragment implements View.OnClickListener 
                     showDialogResult("You WON this battle!!");
                     calcArmiesAfterBattle(ArmyProvider.CONTENT_LEBANON_URI, robotArmy);
                 }
+                winTheGameChecker();
                 break;
 
             case R.id.imageButtonIran:
@@ -101,9 +115,36 @@ public class WarCenterFragment extends Fragment implements View.OnClickListener 
                     calcArmiesAfterBattle(ArmyProvider.CONTENT_URI, userArmy);
                 }else{
                     showDialogResult("You WON this battle!!");
-                    calcArmiesAfterBattle(ArmyProvider.CONTENT_LEBANON_URI, robotArmy);
+                    calcArmiesAfterBattle(ArmyProvider.CONTENT_IRAN_URI, robotArmy);
                 }
+                winTheGameChecker();
                 break;
+        }
+    }
+
+    protected void winTheGameChecker(){
+        if ((iranIsOccupied == true) && (lebanonIsOccupied == true)){
+
+            showDialogResult("Congratulations, you won the game!!");
+            sleeping();
+            sp.edit()
+                    .putBoolean(getString(R.string.first_time_run), true)
+                    .apply();
+            deleteAllDb();
+            new CountDownTimer(3000, 1000){
+
+                @Override
+                public void onTick(long l) {
+
+                }
+
+                @Override
+                public void onFinish() {
+//                    getActivity().finish();
+                    Intent intent = new Intent(getContext(), StartGameActivity.class);
+                    startActivity(intent);
+                }
+            }.start();
         }
     }
 
@@ -134,7 +175,7 @@ public class WarCenterFragment extends Fragment implements View.OnClickListener 
             if (uri == ArmyProvider.CONTENT_URI){
                 showDialogResult("Game Over, Sorry but your army is destroyed");
                 sp.edit()
-                        .putBoolean(getString(R.string.first_time_run), false)
+                        .putBoolean(getString(R.string.first_time_run), true)
                         .apply();
                 sleeping();
                 deleteAllDb();
@@ -142,21 +183,13 @@ public class WarCenterFragment extends Fragment implements View.OnClickListener 
                 startActivity(intent);
             }else if (uri == ArmyProvider.CONTENT_LEBANON_URI){
                 showDialogResult("Good Work, Your army occupied Lebanon");
+                imageButtonLebanon.setVisibility(View.INVISIBLE);
                 lebanonIsOccupied = true;
             }else if (uri == ArmyProvider.CONTENT_IRAN_URI) {
                 showDialogResult("Good Work, Your army occupied Iran");
+                imageButtonIran.setVisibility(View.INVISIBLE);
                 iranIsOccupied = true;
             }
-        }
-        if (iranIsOccupied && lebanonIsOccupied){
-            showDialogResult("Congratulations, you won the game!!");
-            sp.edit()
-                    .putBoolean(getString(R.string.first_time_run), false)
-                    .apply();
-            sleeping();
-            deleteAllDb();
-            Intent intent = new Intent(getContext(), StartGameActivity.class);
-            startActivity(intent);
         }
     }
 

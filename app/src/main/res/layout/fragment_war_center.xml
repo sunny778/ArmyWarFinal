@@ -1,25 +1,43 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainWarLinear"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/world_background"
     android:orientation="horizontal"
     tools:context="com.example.sunny.restaurantapp.WarCenterFragment">
 
-    <ImageButton
-        android:id="@+id/imageButtonLebanon"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@null"
-        app:srcCompat="@mipmap/lebanon_map_picture" />
+        android:orientation="horizontal">
 
-    <ImageButton
-        android:id="@+id/imageButtonIran"
+        <ImageButton
+            android:id="@+id/imageButtonIran"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:scaleType="fitCenter"
+            app:srcCompat="@mipmap/iran_map_picture" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@null"
-        app:srcCompat="@mipmap/iran_map_picture" />
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/imageButtonLebanon"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:scaleType="fitCenter"
+            app:srcCompat="@mipmap/lebanon_map_picture" />
+    </LinearLayout>
+
 </LinearLayout>
