@@ -20,6 +20,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
+import static java.security.AccessController.getContext;
+
 public class UserMainPageActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "UserMainPageActivity";
@@ -36,11 +38,11 @@ public class UserMainPageActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_user_main_page);
 
         userInfoSP = getSharedPreferences(getString(R.string.user_info), MODE_PRIVATE);
-        boolean firsTimeRun = userInfoSP.getBoolean(getString(R.string.first_time_run), false);
+        boolean firsTimeRun = userInfoSP.getBoolean(getString(R.string.first_time_run), true);
 
         if (firsTimeRun){
             userInfoSP.edit()
-                    .putBoolean(getString(R.string.first_time_run), true)
+                    .putBoolean(getString(R.string.first_time_run), false)
                     .putInt(getString(R.string.save_land), STARTING_LAND)
                     .putInt(getString(R.string.save_money), STARTING_MONEY)
                     .putString(getString(R.string.save_date), STARTING_DATE)
@@ -65,6 +67,23 @@ public class UserMainPageActivity extends AppCompatActivity implements View.OnCl
                 Intent intent = new Intent(UserMainPageActivity.this, MainActivity.class);
                 startActivity(intent);
                 break;
+        }
+    }
+
+    protected void insertItemsIntoDB(ArrayList<ArmyItem> armyItems){
+
+        for (int i = 0; i < armyItems.size(); i++) {
+            ArmyItem armyItem = armyItems.get(i);
+
+            ContentValues values = new ContentValues();
+
+            values.put(UserArmyDBHelper.COL_QUANTITY, armyItem.getOwn());
+            values.put(UserArmyDBHelper.COL_NAME, armyItem.getName());
+            values.put(UserArmyDBHelper.COL_IMAGE, armyItem.getImage());
+            values.put(UserArmyDBHelper.COL_PRICE, armyItem.getPrice());
+
+            getContentResolver().insert(ArmyProvider.CONTENT_LEBANON_URI, values);
+            getContentResolver().insert(ArmyProvider.CONTENT_URI, values);
         }
     }
 }

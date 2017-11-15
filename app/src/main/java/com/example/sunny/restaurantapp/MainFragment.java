@@ -4,6 +4,7 @@ package com.example.sunny.restaurantapp;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -12,10 +13,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +39,7 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MainFragment extends Fragment implements View.OnClickListener {
+public class MainFragment extends Fragment implements View.OnClickListener{
 
     private static final int ARMIES_QUANTITY = 2;
     private static final long DELAY_IN_MILLIS = 5000;
@@ -53,6 +56,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     private TextView textMoney;
     private TextView textDate;
     private TextView textMilitarySize;
+    private AlertDialog.Builder builder;
 
     public MainFragment() {
         // Required empty public constructor
@@ -80,12 +84,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         manager = getFragmentManager();
 
         root.findViewById(R.id.buttonBuyArmy).setOnClickListener(this);
-        root.findViewById(R.id.buttonSpy).setOnClickListener(this);
-        root.findViewById(R.id.buttonTech).setOnClickListener(this);
         root.findViewById(R.id.buttonWar).setOnClickListener(this);
-        root.findViewById(R.id.buttonNews).setOnClickListener(this);
-        root.findViewById(R.id.buttonRank).setOnClickListener(this);
-        root.findViewById(R.id.buttonDiplomacy).setOnClickListener(this);
         root.findViewById(R.id.buttonNext).setOnClickListener(this);
         root.findViewById(R.id.buttonNewGame).setOnClickListener(this);
 
@@ -154,14 +153,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                         .commit();
                 break;
 
-            case R.id.buttonSpy:
-
-                break;
-
-            case R.id.buttonTech:
-
-                break;
-
             case R.id.buttonWar:
 
                 manager.beginTransaction()
@@ -170,26 +161,32 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                         .commit();
                 break;
 
-            case R.id.buttonNews:
-
-                break;
-
-            case R.id.buttonRank:
-
-                break;
-
-            case R.id.buttonDiplomacy:
-
-                break;
-
             case R.id.buttonNewGame:
-                sp.edit()
-                        .putBoolean(getString(R.string.first_time_run), true)
-                        .apply();
-                getActivity().finish();
-                Intent intent = new Intent(getContext(), UserMainPageActivity.class);
-                startActivity(intent);
-                Toast.makeText(getContext(), "New Game", Toast.LENGTH_SHORT).show();
+                builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("New Game")
+                        .setMessage("Start new game?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                sp.edit()
+                                        .putBoolean(getString(R.string.first_time_run), true)
+                                        .apply();
+                                getActivity().finish();
+                                Intent intent = new Intent(getContext(), UserMainPageActivity.class);
+                                startActivity(intent);
+                                getActivity().getContentResolver().delete(ArmyProvider.CONTENT_URI, null, null);
+                                getActivity().getContentResolver().delete(ArmyProvider.CONTENT_LEBANON_URI, null, null);
+                                getActivity().getContentResolver().delete(ArmyProvider.CONTENT_IRAN_URI, null, null);
+                                Toast.makeText(getContext(), "New Game", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        })
+                        .show();
                 break;
 
             case R.id.buttonNext:

@@ -140,7 +140,6 @@ public class WarCenterFragment extends Fragment implements View.OnClickListener 
 
                 @Override
                 public void onFinish() {
-//                    getActivity().finish();
                     Intent intent = new Intent(getContext(), StartGameActivity.class);
                     startActivity(intent);
                 }

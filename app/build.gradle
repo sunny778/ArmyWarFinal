@@ -32,7 +32,9 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'com.juanpabloprado:countrypicker:1.2.0'
+    compile 'com.github.mukeshsolanki:country-picker-android:1.1.7'
     testCompile 'junit:junit:4.12'
+
 }
 
 

@@ -126,21 +126,6 @@
                 android:text="@string/button_buy_army"
                 android:textAllCaps="false" />
 
-            <Button
-                android:id="@+id/buttonSpy"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="Spy Center"
-                android:textAllCaps="false" />
-
-            <Button
-                android:id="@+id/buttonTech"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="Technology"
-                android:textAllCaps="false" />
         </LinearLayout>
 
         <LinearLayout
@@ -157,21 +142,6 @@
                 android:text="@string/button_war_center"
                 android:textAllCaps="false" />
 
-            <Button
-                android:id="@+id/buttonNews"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="News"
-                android:textAllCaps="false" />
-
-            <Button
-                android:id="@+id/buttonRank"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="Rank"
-                android:textAllCaps="false" />
         </LinearLayout>
 
         <LinearLayout
@@ -179,14 +149,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/buttonDiplomacy"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="Diplomacy"
-                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/buttonNewGame"

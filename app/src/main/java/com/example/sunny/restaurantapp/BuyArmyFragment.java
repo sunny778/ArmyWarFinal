@@ -82,6 +82,7 @@ public class BuyArmyFragment extends Fragment {
             values.put(UserArmyDBHelper.COL_PRICE, armyItem.getPrice());
 
             getContext().getContentResolver().insert(ArmyProvider.CONTENT_LEBANON_URI, values);
+            getContext().getContentResolver().insert(ArmyProvider.CONTENT_IRAN_URI, values);
             getContext().getContentResolver().insert(ArmyProvider.CONTENT_URI, values);
         }
     }

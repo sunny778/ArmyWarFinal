@@ -163,7 +163,8 @@ public class BuyListAdapter extends RecyclerView.Adapter<BuyListAdapter.BuyListH
 
         ContentValues values = new ContentValues();
         values.put(UserArmyDBHelper.COL_QUANTITY, quantity);
-        context.getContentResolver().update(ArmyProvider.CONTENT_URI, values, UserArmyDBHelper.COL_ID + "=" + itemId, null);
+        int counter = context.getContentResolver().update(ArmyProvider.CONTENT_URI, values, UserArmyDBHelper.COL_ID + "=" + itemId, null);
+        Toast.makeText(context, counter + "", Toast.LENGTH_SHORT).show();
     }
 
     public int getOwnQuantityItem(int itemId){
